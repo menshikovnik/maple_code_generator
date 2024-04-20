@@ -1,3 +1,4 @@
 /.idea/
 /venv/
 /maple_code_generator.iml
+/auto_chromedriver/.venv/

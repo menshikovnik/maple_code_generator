@@ -1,5 +1,4 @@
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
@@ -13,16 +12,14 @@ import string
 def make_code():
     chrome_options = Options()
     chrome_options.add_argument("--headless")
-    service = Service("/Users/nikmenshikov/Downloads/chromedriver-mac-arm64/chromedriver")
-
-    driver = webdriver.Chrome(service=service, options=chrome_options)
+    driver = webdriver.Chrome(options=chrome_options)
 
     letters = string.ascii_lowercase
     random_mail = ''.join(random.choice(letters) for _ in range(6)) + '@mailsac.com'
 
     free_trial_link = 'https://www.maplesoft.com/products/maple/free-trial/'
     getlink = 'https://mailsac.com/inbox/'
-
+    print("Download...")
     driver.get(free_trial_link)
     driver.find_element("xpath", "//input[@id='EmailAddress']").send_keys(random_mail)
     button = driver.find_element(By.XPATH, "//div[contains(text(),'Get your Free Trial')]")
@@ -64,6 +61,17 @@ def make_code():
     print('Activation code : ' + activation_code)
     print('Your evaluation will expire in ' + str(expiration_date))
     print('\n')
+
+    print("Do you need a download link?\nEnter 1 or 2")
+    print("1. Yes, thanks\n2. No, i already have Maple 2024")
+
+    choose = int(input())
+    if choose == 1:
+        download_link = driver.find_element("xpath", "//span[@id='evaluationDownloadLink']").text
+        print("Download link: " + download_link + "\n")
+        print("Thanks for using the program")
+    else:
+        print("Thanks for using the program")
 
 
 make_code()
